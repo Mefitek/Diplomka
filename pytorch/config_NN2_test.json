@@ -1,0 +1,54 @@
+{
+    "name": "PT_NN2_Multiclass",
+    "n_gpu": 1,
+
+    "arch": {
+        "type": "NN_2_Model",
+        "args": {
+            "input_channels": 4,
+            "num_classes": 6
+        }
+    },
+    "data_loader": {
+        "type": "PTDataLoader",
+        "args": {
+            "data_dir": "data/pt_9",
+            "batch_size": 64,
+            "shuffle": true,
+            "num_workers": 6,
+            "training": false,
+            "test": true
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args": {
+            "lr": 0.001,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": "cross_entropy_loss",
+    "metrics": [
+        "multiclass_accuracy"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 50,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+
+        "save_dir": "saved/NN_2/",
+        "save_period": 1,
+        "verbosity": 2,
+
+        "monitor": "min val_loss",
+        "early_stop": 10,
+
+        "tensorboard": false
+    }
+}
